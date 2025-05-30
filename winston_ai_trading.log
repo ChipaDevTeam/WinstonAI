@@ -1,0 +1,63 @@
+2025-05-29 17:02:18,422 - INFO - ============================================================
+2025-05-29 17:03:03,220 - ERROR - Error monitoring asset EURUSD_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:03:03,222 - ERROR - Error monitoring asset GBPUSD_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:03:03,226 - ERROR - Error monitoring asset USDJPY_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:16:29,087 - INFO - 🚀 Starting WinstonAI Live Trading Bot
+2025-05-29 17:16:29,087 - INFO - ============================================================
+2025-05-29 17:16:37,081 - INFO - 💰 Account Balance: $50000.00
+2025-05-29 17:16:37,082 - INFO - 🔍 Starting monitoring for EURUSD_otc
+2025-05-29 17:16:37,082 - ERROR - Error monitoring asset EURUSD_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:16:37,082 - INFO - 🔍 Starting monitoring for GBPUSD_otc
+2025-05-29 17:16:37,082 - ERROR - Error monitoring asset GBPUSD_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:16:37,082 - INFO - 🔍 Starting monitoring for USDJPY_otc
+2025-05-29 17:16:37,082 - ERROR - Error monitoring asset USDJPY_otc: 'PocketOptionAsync' object has no attribute 'candles'
+2025-05-29 17:16:37,083 - INFO - 🛑 Trading bot stopped
+2025-05-29 17:17:46,274 - INFO - 🚀 Starting WinstonAI Live Trading Bot
+2025-05-29 17:17:46,275 - INFO - ============================================================
+2025-05-29 17:17:54,020 - INFO - 💰 Account Balance: $50000.00
+2025-05-29 17:17:54,020 - INFO - 🔍 Starting monitoring for EURUSD_otc
+2025-05-29 17:17:54,021 - INFO - 🔍 Starting monitoring for GBPUSD_otc
+2025-05-29 17:17:54,022 - INFO - 🔍 Starting monitoring for USDJPY_otc
+2025-05-29 17:17:54,300 - ERROR - Error monitoring asset EURUSD_otc: non convertible value 2025-05-29T22:20:00Z with the unit 's', at position 0
+2025-05-29 17:17:54,493 - ERROR - Error monitoring asset USDJPY_otc: non convertible value 2025-05-29T22:20:00Z with the unit 's', at position 0
+2025-05-29 17:17:54,494 - ERROR - Error monitoring asset GBPUSD_otc: non convertible value 2025-05-29T22:20:00Z with the unit 's', at position 0
+2025-05-29 17:17:54,494 - INFO - 🛑 Trading bot stopped
+2025-05-29 17:19:02,003 - INFO - 🚀 Starting WinstonAI Live Trading Bot
+2025-05-29 17:19:02,003 - INFO - ============================================================
+2025-05-29 17:19:09,633 - INFO - 💰 Account Balance: $50000.00
+2025-05-29 17:19:09,634 - INFO - 🔍 Starting monitoring for EURUSD_otc
+2025-05-29 17:19:09,635 - INFO - 🔍 Starting monitoring for GBPUSD_otc
+2025-05-29 17:19:09,635 - INFO - 🔍 Starting monitoring for USDJPY_otc
+2025-05-29 17:19:09,922 - INFO - 📊 Loaded 54 historical candles for EURUSD_otc
+2025-05-29 17:19:09,922 - ERROR - Error monitoring asset EURUSD_otc: PocketOptionAsync.subscribe_symbol() got an unexpected keyword argument 'time_frame'
+2025-05-29 17:19:10,100 - INFO - 📊 Loaded 54 historical candles for USDJPY_otc
+2025-05-29 17:19:10,101 - ERROR - Error monitoring asset USDJPY_otc: PocketOptionAsync.subscribe_symbol() got an unexpected keyword argument 'time_frame'
+2025-05-29 17:19:10,105 - INFO - 📊 Loaded 54 historical candles for GBPUSD_otc
+2025-05-29 17:19:10,106 - ERROR - Error monitoring asset GBPUSD_otc: PocketOptionAsync.subscribe_symbol() got an unexpected keyword argument 'time_frame'
+2025-05-29 17:19:10,106 - INFO - 🛑 Trading bot stopped
+2025-05-29 17:19:39,174 - INFO - 🚀 Starting WinstonAI Live Trading Bot
+2025-05-29 17:19:39,174 - INFO - ============================================================
+2025-05-29 17:19:46,850 - INFO - 💰 Account Balance: $50000.00
+2025-05-29 17:19:46,850 - INFO - 🔍 Starting monitoring for EURUSD_otc
+2025-05-29 17:19:46,851 - INFO - 🔍 Starting monitoring for GBPUSD_otc
+2025-05-29 17:19:46,851 - INFO - 🔍 Starting monitoring for USDJPY_otc
+2025-05-29 17:19:47,139 - INFO - 📊 Loaded 54 historical candles for EURUSD_otc
+2025-05-29 17:19:47,140 - ERROR - Error monitoring asset EURUSD_otc: PocketOptionAsync.subscribe_symbol() takes 2 positional arguments but 3 were given
+2025-05-29 17:19:47,330 - INFO - 📊 Loaded 54 historical candles for USDJPY_otc
+2025-05-29 17:19:47,330 - ERROR - Error monitoring asset USDJPY_otc: PocketOptionAsync.subscribe_symbol() takes 2 positional arguments but 3 were given
+2025-05-29 17:19:47,335 - INFO - 📊 Loaded 54 historical candles for GBPUSD_otc
+2025-05-29 17:19:47,336 - ERROR - Error monitoring asset GBPUSD_otc: PocketOptionAsync.subscribe_symbol() takes 2 positional arguments but 3 were given
+2025-05-29 17:19:47,336 - INFO - 🛑 Trading bot stopped
+2025-05-29 17:20:46,094 - INFO - 🚀 Starting WinstonAI Live Trading Bot
+2025-05-29 17:20:46,095 - INFO - ============================================================
+2025-05-29 17:20:53,802 - INFO - 💰 Account Balance: $50000.00
+2025-05-29 17:20:53,802 - INFO - 🔍 Starting monitoring for EURUSD_otc
+2025-05-29 17:20:53,804 - INFO - 🔍 Starting monitoring for GBPUSD_otc
+2025-05-29 17:20:53,804 - INFO - 🔍 Starting monitoring for USDJPY_otc
+2025-05-29 17:20:54,086 - INFO - 📊 Loaded 53 historical candles for EURUSD_otc
+2025-05-29 17:20:54,086 - ERROR - Error monitoring asset EURUSD_otc: 'async for' requires an object with __aiter__ method, got coroutine
+2025-05-29 17:20:54,276 - INFO - 📊 Loaded 53 historical candles for USDJPY_otc
+2025-05-29 17:20:54,276 - ERROR - Error monitoring asset USDJPY_otc: 'async for' requires an object with __aiter__ method, got coroutine
+2025-05-29 17:20:54,281 - INFO - 📊 Loaded 53 historical candles for GBPUSD_otc
+2025-05-29 17:20:54,281 - ERROR - Error monitoring asset GBPUSD_otc: 'async for' requires an object with __aiter__ method, got coroutine
+2025-05-29 17:20:54,282 - INFO - 🛑 Trading bot stopped

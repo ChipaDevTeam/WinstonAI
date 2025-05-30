@@ -1,0 +1,29 @@
+{
+    "ssid": "42[\"auth\",{\"session\":\"t04ppgptp3404h0lajp4bo7smh\",\"isDemo\":1,\"uid\":101884312,\"platform\":2,\"isFastHistory\":false}]",
+    "assets": [
+        "EURUSD_otc",
+        "GBPUSD_otc",
+        "USDJPY_otc",
+        "USDCAD_otc",
+        "AUDUSD_otc"
+    ],
+    "trade_amount": 1.0,
+    "trade_duration": 60,
+    "max_trades_per_hour": 10,
+    "min_confidence": 0.7,
+    "risk_management": {
+        "max_daily_loss": 100.0,
+        "max_consecutive_losses": 3,
+        "stop_loss_percentage": 0.1
+    },
+    "trading_hours": {
+        "start": "08:00",
+        "end": "18:00"
+    },
+    "advanced_settings": {
+        "lookback_window": 50,
+        "min_trade_interval_minutes": 1,
+        "candle_timeframe": 60,
+        "max_concurrent_trades": 3
+    }
+}
