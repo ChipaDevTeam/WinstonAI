@@ -379,7 +379,37 @@ def train():
     print("Calculating Price Action indicators...")
     df = PriceActionFeatures.add_features(df)
     
+    # Normalization
+    print("Normalizing features...")
+    feature_cols = [c for c in df.columns if c not in ['time', 'volume', 'date', 'close', 'open', 'high', 'low']]
+    # Note: We excluded raw OHLC from features usually to make it price-agnostic, 
+    # but PriceActionFeatures might have added them or derivatives.
+    # Let's verify what PriceActionFeatures adds. 
+    # It adds 'ema_5', 'rsi', 'dist_to_resistance', etc.
+    # The TradingEnv uses all columns except 'time', 'volume', 'date'.
+    # If we want to normalize effectively, we should normalize everything used by the agent.
+    
+    scaler = StandardScaler()
+    # Identification of numeric columns to normalize
+    cols_to_norm = [c for c in df.columns if c not in ['time', 'date']]
+    df[cols_to_norm] = scaler.fit_transform(df[cols_to_norm])
+    
+    print("Features normalized.")
+
     # 3. Setup Environment
+    # We need to pass the UNNORMALIZED prices for reward calculation if the env relies on them?
+    # TradingEnv uses self.prices = df['close'].values for reward calc.
+    # Uh oh. If I normalize 'close' in place, the reward calculation (future_price > current_price) 
+    # will be dealing with normalized values (e.g. 0.1 vs 0.2).
+    # The logic (a > b) is preserved under linear scaling, so (norm_a > norm_b) is true if a > b.
+    # THE REWARD QUANTITY might be affected: reward = (future - current).
+    # Wait, the reward logic in TradingEnv is: 
+    # if future > current: reward = trade_amount * payout.
+    # else: reward = -trade_amount.
+    # Since trade_amount is fixed (10), the absolute price values DON'T matter for the logic, 
+    # only the direction (> or <).
+    # So normalizing 'close' is SAFE for this specific Env logic.
+    
     env = TradingEnv(df)
     
     # input dim is number of feature columns
