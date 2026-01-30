@@ -447,6 +447,9 @@ def train():
                 
         print(f"Episode {episode}\t Reward: {episode_reward:.2f}\t Final Balance: {info['balance']:.2f}")
         
+        # Save Model checkpoint
+        torch.save(agent.policy.state_dict(), "src/winston_ai_rl_5s_model.pth")
+        
     # Save Model
     print("Saving model...")
     torch.save(agent.policy.state_dict(), "src/winston_ai_rl_5s_model.pth")
