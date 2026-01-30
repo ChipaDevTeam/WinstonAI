@@ -105,8 +105,8 @@ class PriceActionFeatures:
         df.loc[condition_down, 'trend'] = -1
         
         # Clean up NaNs from rolling windows
-        df.fillna(method='bfill', inplace=True)
-        df.fillna(method='ffill', inplace=True)
+        df.bfill(inplace=True)
+        df.ffill(inplace=True)
         df.fillna(0, inplace=True) # Fallback
         
         return df
