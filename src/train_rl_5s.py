@@ -239,14 +239,9 @@ class PPOAgent:
         
         self.policy = ActorCritic(input_dim, 128, action_dim).to(device)
         
-        # Optimize model with torch.compile if available (PyTorch 2.0+)
-        # This can significantly speed up inference and training on GPU
-        if hasattr(torch, 'compile'):
-            try:
-                print("   Compiling PPO policy with torch.compile()...")
-                self.policy = torch.compile(self.policy)
-            except Exception as e:
-                print(f"   Could not compile model: {e}")
+        # Disabled torch.compile to avoid state_dict mismatch errors with policy_old
+        # if hasattr(torch, 'compile'):
+        #     self.policy = torch.compile(self.policy)
 
         self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
         self.policy_old = ActorCritic(input_dim, 128, action_dim).to(device)
