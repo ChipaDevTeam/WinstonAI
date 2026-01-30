@@ -11,20 +11,25 @@ import os
 import sys
 
 # --- GPU Optimization & Configuration ---
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-    # Enable cudnn benchmark for optimized performance on fixed input sizes
-    torch.backends.cudnn.benchmark = True
-    print(f"✅ GPU Detected: {torch.cuda.get_device_name(0)}")
-    print(f"   VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
-else:
+try:
+    if torch.cuda.is_available():
+        # Test basic CUDA functionality before committing
+        test_tensor = torch.zeros(1).cuda()
+        del test_tensor
+        
+        device = torch.device("cuda")
+        # Enable cudnn benchmark for optimized performance on fixed input sizes
+        torch.backends.cudnn.benchmark = True
+        print(f"✅ GPU Detected: {torch.cuda.get_device_name(0)}")
+        print(f"   VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
+    else:
+        raise RuntimeError("CUDA not available")
+except Exception as e:
     device = torch.device("cpu")
-    print("⚠️  GPU NOT DETECTED. Using CPU.")
-    print("   To enable GPU, ensure you have installed PyTorch with CUDA support.")
-    
-    # Try to provide a helpful command based on 2026/future context (which I am in)
-    # or generic advice.
-    print("   Run: pip install torch --index-url https://download.pytorch.org/whl/cu124 (or your version)")
+    print(f"⚠️  GPU/CUDA Error: {e}")
+    print("   Falling back to CPU training.")
+
+# Optional: Enable TensorFloat32 for Ampere+ GPUs (faster FP32 matmul)
 
 # Optional: Enable TensorFloat32 for Ampere+ GPUs (faster FP32 matmul)
 # This requires newer PyTorch versions which we likely have in 2026.
