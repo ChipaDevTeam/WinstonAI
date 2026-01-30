@@ -411,6 +411,22 @@ def train():
     action_dim = 3 # HOLD, CALL, PUT
     
     agent = PPOAgent(input_dim, action_dim)
+    
+    # Load existing model if available (Retraining/Fine-tuning)
+    model_path = "src/winston_ai_rl_5s_model.pth"
+    if os.path.exists(model_path):
+        print(f"🔄 Loading existing model from {model_path}...")
+        try:
+            state_dict = torch.load(model_path, map_location=device)
+            agent.policy.load_state_dict(state_dict)
+            agent.policy_old.load_state_dict(state_dict)
+            print("✅ Model loaded successfully. Resuming training...")
+        except Exception as e:
+            print(f"⚠️  Error loading model: {e}")
+            print("   Starting fresh training.")
+    else:
+        print("🆕 No existing model found. Starting fresh training.")
+        
     memory = Memory()
     
     max_episodes = 500
