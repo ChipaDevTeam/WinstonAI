@@ -9,8 +9,31 @@ import ta
 import os
 import sys
 
-# GPU Configuration
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# --- GPU Optimization & Configuration ---
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    # Enable cudnn benchmark for optimized performance on fixed input sizes
+    torch.backends.cudnn.benchmark = True
+    print(f"✅ GPU Detected: {torch.cuda.get_device_name(0)}")
+    print(f"   VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
+else:
+    device = torch.device("cpu")
+    print("⚠️  GPU NOT DETECTED. Using CPU.")
+    print("   To enable GPU, ensure you have installed PyTorch with CUDA support.")
+    
+    # Try to provide a helpful command based on 2026/future context (which I am in)
+    # or generic advice.
+    print("   Run: pip install torch --index-url https://download.pytorch.org/whl/cu124 (or your version)")
+
+# Optional: Enable TensorFloat32 for Ampere+ GPUs (faster FP32 matmul)
+# This requires newer PyTorch versions which we likely have in 2026.
+try:
+    if torch.cuda.is_available() and torch.cuda.get_device_capability()[0] >= 8:
+        torch.set_float32_matmul_precision('high')
+        print("   TensorFloat32 enabled for Ampere+ GPU.")
+except:
+    pass
+
 print(f"Using device: {device}")
 
 class PriceActionFeatures:
