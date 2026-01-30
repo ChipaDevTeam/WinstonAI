@@ -62,10 +62,12 @@ class PriceActionFeatures:
         # Swing Highs and Lows (Fractals) - Window of 2 candles on each side
         # A swing high is a high surrounded by lower highs
         df['swing_high'] = df['high'].rolling(window=5, center=True).apply(
-            lambda x: 1 if x[2] == max(x) else 0
+            lambda x: 1 if x[2] == max(x) else 0,
+            raw=True
         )
         df['swing_low'] = df['low'].rolling(window=5, center=True).apply(
-            lambda x: 1 if x[2] == min(x) else 0
+            lambda x: 1 if x[2] == min(x) else 0,
+            raw=True
         )
 
         # Support and Resistance Levels (Dynamic)
