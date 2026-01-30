@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.distributions import Categorical
+from sklearn.preprocessing import StandardScaler
 import random
 import ta
 import os
@@ -339,23 +340,40 @@ class Memory:
 def train():
     print("Starting Training on 5s Candles...")
     
-    # 1. Load Data (Mock data or real if file exists)
-    # Using mock data for demonstration if no file provided
-    print("Generating synthetic 5s price action data...")
-    dates = pd.date_range(start='2024-01-01', periods=10000, freq='5S')
-    # Random walk with some trendiness to simulate price
-    price = 100 + np.cumsum(np.random.normal(0, 0.1, 10000))
-    # Add some sine waves for swing highs/lows pattern
-    price += np.sin(np.linspace(0, 50, 10000)) * 2
-    
-    df = pd.DataFrame({
-        'time': dates,
-        'open': price + np.random.normal(0, 0.02, 10000),
-        'high': price + np.abs(np.random.normal(0, 0.05, 10000)),
-        'low': price - np.abs(np.random.normal(0, 0.05, 10000)),
-        'close': price + np.random.normal(0, 0.02, 10000),
-        'volume': np.random.randint(100, 1000, 10000)
-    })
+    # 1. Load Data
+    data_path = r"C:\Users\vigop\.cache\kagglehub\datasets\komodata\forexdataset\versions\2\EURUSD_M30.csv"
+    if os.path.exists(data_path):
+        print(f"Loading data from {data_path}...")
+        df = pd.read_csv(data_path)
+        df['time'] = pd.to_datetime(df['time'])
+        
+        # Rename tick_volume to volume if needed
+        if 'tick_volume' in df.columns:
+            df.rename(columns={'tick_volume': 'volume'}, inplace=True)
+            
+        # WARNING: The dataset is M30, but we are simulating 5s strategy.
+        # This means 1 step in the env is actually 30 minutes, not 5 seconds.
+        # To truly simulate 5s, we would need 5s data.
+        # However, for the purpose of learning "Price Action" patterns on a fractal level,
+        # the patterns on M30 are similar to 5s (Fractal Market Hypothesis).
+        print(f"Loaded {len(df)} rows. Using M30 candles to simulate structure learning.")
+        
+    else:
+        print("Data file not found. Generating synthetic 5s price action data...")
+        dates = pd.date_range(start='2024-01-01', periods=10000, freq='5S')
+        # Random walk with some trendiness to simulate price
+        price = 100 + np.cumsum(np.random.normal(0, 0.1, 10000))
+        # Add some sine waves for swing highs/lows pattern
+        price += np.sin(np.linspace(0, 50, 10000)) * 2
+        
+        df = pd.DataFrame({
+            'time': dates,
+            'open': price + np.random.normal(0, 0.02, 10000),
+            'high': price + np.abs(np.random.normal(0, 0.05, 10000)),
+            'low': price - np.abs(np.random.normal(0, 0.05, 10000)),
+            'close': price + np.random.normal(0, 0.02, 10000),
+            'volume': np.random.randint(100, 1000, 10000)
+        })
     
     # 2. Add Price Action Features
     print("Calculating Price Action indicators...")
