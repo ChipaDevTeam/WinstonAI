@@ -11,25 +11,17 @@ import os
 import sys
 
 # --- GPU Optimization & Configuration ---
-try:
-    if torch.cuda.is_available():
-        # Test basic CUDA functionality before committing
-        test_tensor = torch.zeros(1).cuda()
-        del test_tensor
-        
-        device = torch.device("cuda")
-        # Enable cudnn benchmark for optimized performance on fixed input sizes
-        torch.backends.cudnn.benchmark = True
-        print(f"✅ GPU Detected: {torch.cuda.get_device_name(0)}")
-        print(f"   VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
-    else:
-        raise RuntimeError("CUDA not available")
-except Exception as e:
-    device = torch.device("cpu")
-    print(f"⚠️  GPU/CUDA Error: {e}")
-    print("   Falling back to CPU training.")
+# ERROR HANDLING: The detected GPU (RTX 5060, sm_120) is too new for the installed PyTorch/CUDA version.
+# This causes 'no kernel image is available' errors for complex layers like LSTM.
+# We are forcing CPU usage to ensure the script runs reliably.
+# To use GPU, you would need a PyTorch build that supports Compute Capability 12.0 (sm_120).
+print("⚠️  Compatibility Issue: GPU (RTX 5060) is too new for installed PyTorch.")
+print("   Forcing CPU mode to prevent crashes.")
+device = torch.device("cpu")
 
-# Optional: Enable TensorFloat32 for Ampere+ GPUs (faster FP32 matmul)
+# Optional: Enable TensorFloat32 - Disabled for CPU fallback
+# try:
+#     if torch.cuda.is_available()...
 
 # Optional: Enable TensorFloat32 for Ampere+ GPUs (faster FP32 matmul)
 # This requires newer PyTorch versions which we likely have in 2026.
