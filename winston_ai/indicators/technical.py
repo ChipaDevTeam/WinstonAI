@@ -155,7 +155,7 @@ class TechnicalIndicators:
         
         # Convert to DataFrame and handle NaN values
         indicators_df = pd.DataFrame(indicators)
-        indicators_df = indicators_df.fillna(method='ffill').fillna(method='bfill').fillna(0)
+        indicators_df = indicators_df.ffill().bfill().fillna(0)
         
         return indicators_df
     
@@ -199,6 +199,6 @@ class TechnicalIndicators:
             warnings.warn(f"Error calculating basic indicators: {e}")
         
         indicators_df = pd.DataFrame(indicators)
-        indicators_df = indicators_df.fillna(method='ffill').fillna(method='bfill').fillna(0)
+        indicators_df = indicators_df.ffill().bfill().fillna(0)
         
         return indicators_df
