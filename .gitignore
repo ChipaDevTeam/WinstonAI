@@ -1,1 +1,114 @@
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
 .venv
+venv/
+ENV/
+env/
+.virtualenv
+
+# PyTorch & ML
+*.pth
+*.pt
+*.onnx
+*.pb
+checkpoints/
+logs/
+runs/
+tensorboard/
+wandb/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Data & Datasets
+data/
+datasets/
+*.csv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+kaggle.json
+
+# Logs
+*.log
+*.out
+*.err
+
+# Configuration (local overrides)
+*local.json
+*local.yaml
+*.local.*
+.env
+.env.local
+secrets/
+
+# Model artifacts
+models/
+*.pkl
+*.joblib
+
+# Operating System
+Thumbs.db
+.DS_Store
+*.bak
+*.tmp
+
+# Documentation build
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# Package manager
+poetry.lock
+Pipfile.lock
+
+# CI/CD
+.github/workflows/local/
+
+# Temporary files
+tmp/
+temp/
+*.cache
