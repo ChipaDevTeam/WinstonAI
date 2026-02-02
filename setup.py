@@ -28,8 +28,7 @@ setup(
         'Source': 'https://github.com/ChipaDevTeam/WinstonAI',
         'Documentation': 'https://github.com/ChipaDevTeam/WinstonAI/blob/main/README.md',
     },
-    packages=find_packages(where='src'),
-    package_dir={'': 'src'},
+    packages=find_packages(include=['winston_ai', 'winston_ai.*']),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -66,8 +65,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'winston-train=train_gpu_optimized:main',
-            'winston-trade=ultra_live_trading_bot:main',
+            'winston-train=examples.train_model:main',
+            'winston-quickstart=examples.quickstart:main',
         ],
     },
     include_package_data=True,

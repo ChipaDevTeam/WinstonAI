@@ -67,106 +67,164 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Configure your settings:
+4. Install WinstonAI as a package:
 ```bash
-# Edit the configuration files in src/
-cp src/training_config.json src/training_config.local.json
-cp src/trading_config.json src/trading_config.local.json
-# Update with your API keys and preferences
+pip install -e .
 ```
 
-### Training the Model
+### Quick Start
 
-**Quick Start (GPU):**
+Run the quick start example:
 ```bash
-cd src
-python quick_start_gpu.py
+python examples/quickstart.py
 ```
 
-**Full Training:**
+Or train with more control:
 ```bash
-cd src
-python train_gpu_optimized.py
+python examples/train_model.py
 ```
 
-**Reinforcement Learning Training (5-second timeframe):**
-```bash
-cd src
-python train_rl_5s.py
+### Using the Library
+
+After installation, you can import WinstonAI in your Python scripts:
+
+```python
+from winston_ai import Trainer, Config, LiveTrader
+from winston_ai import WinstonAI, AdvancedWinstonAI
+from winston_ai.indicators import TechnicalIndicators
 ```
 
-### Live Trading
-
-⚠️ **Warning:** Live trading involves real financial risk. Always test thoroughly with a demo account first.
-
-```bash
-cd src
-python ultra_live_trading_bot.py
-```
+See `examples/` directory for complete usage examples.
 
 ## 📁 Project Structure
 
 ```
 WinstonAI/
-├── src/
+├── winston_ai/                     # Main library package
+│   ├── __init__.py                 # Package initialization
+│   ├── models/                     # Neural network models
+│   │   ├── winston_model.py        # WinstonAI & AdvancedWinstonAI models
+│   │   └── attention.py            # Multi-head attention mechanism
+│   ├── training/                   # Training utilities
+│   │   ├── trainer.py              # High-level training orchestration
+│   │   ├── agent.py                # DQN agent implementation
+│   │   └── environment.py          # Trading environment simulation
+│   ├── trading/                    # Live trading functionality
+│   │   └── live_trader.py          # Live trading interface
+│   ├── indicators/                 # Technical analysis
+│   │   └── technical.py            # Technical indicators calculator
+│   └── utils/                      # Utility functions
+│       ├── config.py               # Configuration management
+│       ├── device.py               # GPU/device management
+│       └── checkpoints.py          # Model checkpoint utilities
+├── examples/                       # Example scripts
+│   ├── quickstart.py               # Quick start example
+│   ├── train_model.py              # Full training example
+│   ├── use_model.py                # Inference example
+│   └── README.md                   # Examples documentation
+├── src/                            # Legacy scripts (for reference)
 │   ├── train_gpu_optimized.py      # GPU-optimized training script
-│   ├── train_rl_5s.py              # Reinforcement learning trainer (5s)
-│   ├── ultra_live_trading_bot.py   # High-performance live trading bot
+│   ├── train_rl_5s.py              # RL trainer (5s timeframe)
+│   ├── ultra_live_trading_bot.py   # High-performance trading bot
 │   ├── live_trading_bot.py         # Standard live trading bot
-│   ├── gpu_monitor.py              # GPU monitoring utilities
-│   ├── gpu_benchmark.py            # GPU performance benchmarking
-│   ├── quick_start_gpu.py          # Quick start script for GPU training
-│   ├── download.py                 # Historical data downloader
-│   ├── gethistory.py               # Historical data fetcher
-│   ├── training_config.json        # Training configuration
-│   ├── gpu_config.json             # GPU settings
-│   ├── trading_config.json         # Trading bot configuration
-│   ├── ultra_trading_config.json   # Ultra bot configuration
-│   └── README_GPU_OPTIMIZATION.md  # Detailed GPU optimization guide
+│   └── gpu_monitor.py              # GPU monitoring utilities
+├── data/                           # Data directory
+│   └── configs/                    # Configuration files
+│       ├── training_config.json    # Training configuration
+│       ├── trading_config.json     # Trading configuration
+│       └── gpu_config.json         # GPU settings
+├── models/                         # Saved models (gitignored)
+├── docs/                           # Documentation
+├── tests/                          # Unit tests
 ├── requirements.txt                # Python dependencies
-├── setup.py                        # Package setup
-├── LICENSE                         # MIT License
-├── CONTRIBUTING.md                 # Contribution guidelines
-├── CODE_OF_CONDUCT.md              # Code of conduct
-├── CHANGELOG.md                    # Version history
+├── setup.py                        # Package installation
 └── README.md                       # This file
 ```
 
 ## 🎮 Usage Examples
 
-### Training a New Model
+### Quick Start
+
+```bash
+# Install the package
+pip install -e .
+
+# Run quick start example
+python examples/quickstart.py
+```
+
+### Training a New Model (Library API)
 
 ```python
-from train_gpu_optimized import AdvancedWinstonAI
+from winston_ai import Trainer, Config
+import pandas as pd
+
+# Load your market data
+data = pd.read_csv('your_market_data.csv')
+# Ensure data has columns: open, high, low, close, volume
+
+# Configure training
+config = Config()
+config.update('training', 
+    episodes=1000,
+    batch_size=512,
+    learning_rate=0.0001
+)
+
+# Create trainer and train
+trainer = Trainer(data=data, config=config)
+metrics = trainer.train(episodes=1000)
+
+# Plot results
+trainer.plot_results('training_results.png')
+```
+
+### Using a Trained Model
+
+```python
+from winston_ai import LiveTrader
+import pandas as pd
+
+# Load trained model
+trader = LiveTrader(
+    model_path='models/winston_ai_final.pth',
+    lookback_window=100
+)
+
+# Get recent market data
+data = get_recent_market_data()  # Your data source
+
+# Make prediction
+prediction = trader.predict(data)
+print(f"Action: {prediction['action_name']}")
+print(f"Confidence: {prediction['confidence']:.2%}")
+
+# Check if should trade
+if trader.should_trade(data, min_confidence=0.7):
+    execute_trade(prediction['action_name'])
+```
+
+### Importing Models Directly
+
+```python
+from winston_ai import WinstonAI, AdvancedWinstonAI
+import torch
 
 # Create model
 model = AdvancedWinstonAI(
-    state_size=100,
-    action_size=3,  # CALL, PUT, HOLD
-    device='cuda'
+    state_size=10000,
+    action_size=3,  # HOLD, CALL, PUT
+    hidden_size=4096
 )
 
-# Train
-model.train(episodes=5000)
-```
-
-### Making Predictions
-
-```python
-import torch
-from train_gpu_optimized import AdvancedWinstonAI
-
-# Load trained model
-model = torch.load('winston_ai_final.pth')
+# Use for training or inference
 model.eval()
-
-# Prepare state (your market data)
-state = prepare_market_data()  # Your function to get market data
-
-# Get action
 with torch.no_grad():
-    action = model.act(state)
+    q_values = model(state_tensor)
+    action = q_values.argmax().item()
 ```
+
+For more examples, see the `examples/` directory.
 
 ## 📊 Model Architecture
 
