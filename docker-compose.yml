@@ -1,0 +1,68 @@
+# Docker Compose for WinstonAI
+
+version: '3.8'
+
+services:
+  winston-train:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: winston-ai-training
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ./src:/app/src
+      - ./models:/app/models
+      - ./logs:/app/logs
+    command: python src/train_gpu_optimized.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  winston-trade:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: winston-ai-trading
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - POCKETOPTION_EMAIL=${POCKETOPTION_EMAIL}
+      - POCKETOPTION_PASSWORD=${POCKETOPTION_PASSWORD}
+    volumes:
+      - ./src:/app/src
+      - ./models:/app/models
+      - ./logs:/app/logs
+    command: python src/ultra_live_trading_bot.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  # Optional: GPU monitoring service
+  gpu-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: winston-ai-monitor
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: python src/gpu_monitor.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
